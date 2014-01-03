@@ -4,7 +4,7 @@ Here is the current plan for the AI:
 We should probably do minimax with alpha-beta pruning, which is a lookahead method.  
 The "alpha-beta pruning" is slightly more complex, but it will save a ton of execution time if done correctly.
 
-here is some pseudocode for the algorith. [source](http://ai-depot.com/articles/minimax-explained/2/)
+here is some pseudocode for the algorithm. [source](http://ai-depot.com/articles/minimax-explained/2/)
 
     MinMax (GamePosition game) {
       return MaxMove (game);
@@ -64,23 +64,22 @@ Note: it must keep track of whose turn it is (this isn't shown as an argument, b
 Next, there is the `EvalGameState()` function.  This is the thing that drives the AI.
 Don't get it wrong, or else the AI won't play the game well.
 
-[Here is a picture of the values of each square for the AI.](http://tim.hibal.org/blog/wp-content/uploads/2010/02/board-position-value.png)
-
 Here is my proposed function, written in pseudocode:
 
-    EvalGameState (game):
-      if (plsyer 1 number of pieces == 0)  #this assumes player 1 is human
+    EvalGameState (game) {
+      if (human number of pieces == 0) 
         return 1337                        #large value so that victory/defeat outweighs anything
-      if (player 2 number of pieces == 0)
+      if (cpu number of pieces == 0)
         return -1337
       totalscore = 0
       ForEach piece {
-        # this implements that picture I referenced earlier
+        # this implements that picture I kept posting
         piecescore = max(abs(xpos - 3.5), abs(ypos - 3.5)) + .5  #assumes x and y are measured from 0 to 7
         if (piece is promoted)
           piecescore = 5
-        if (piece is opponents)
+        if (piece is human)
           piecescore *= -1
         totalscore += piecescore
       return totalscore
     
+The basic idea is that the weight of non-promoted pieces depends on their position on the board.  Pieces either gaurding the back rows or advancing to the very top are worth more.  Also, the weight of promoted pieces does not depend on board position. This is to allow the endgame to function properly, otherwise the pieces will stick to the edges instead of going after the opponent.  It is important to note that large values are good for the AI.
