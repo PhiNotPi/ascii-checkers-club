@@ -337,10 +337,19 @@ def get_o_best_move(board, recurse_depth = 0, moves_so_far = [], minimum = -1337
 
 
 if __name__ == '__main__':
-    players = input('Enter number of players (1 or 2): ')
-    while players not in ['1', '2']:
+    players = input('Enter number of players (0, 1, 2): ')
+    while players not in ['0','1', '2']:
         players = input('Invalid number of players. Try again: ')
 
+    if players == '0':
+        board = Board()
+        while True:
+            print(board.render(Checker.PLAYER_ONE))
+            move = get_o_best_move(board)
+            board = comp_move(board, Checker.PLAYER_ONE, move[len(move)-1])
+            print(board.render(Checker.PLAYER_TWO))
+            move = get_best_move(board)
+            board = comp_move(board, Checker.PLAYER_TWO, move[len(move)-1])
     if players == '1':
         board = Board()
         while True:
