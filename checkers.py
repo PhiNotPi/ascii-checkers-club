@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import copy
+
 class Checker:
     """The checkers piece."""
 
@@ -85,8 +87,7 @@ class Board:
         from_piece = self.data[from_x][from_y]
         to_piece = self.data[to_x][to_y]
 
-        board_copy = Board(True)
-        board_copy.data = [x[:] for x in self.data]
+        board_copy = copy.deepcopy(self)
 
         # first check to see if there's a piece in `from`
         if from_piece is None: return False, 'There is no piece there!'
