@@ -120,6 +120,22 @@ class Board:
         else:
             return False, 'That\'s not a diagonal move!'
 
+def comp_move(board, player, move):
+
+    message = board.move(player, move[0], move[1])
+    board = message[1]
+
+    # handle multiple jumps
+    for i in range(2, len(move)):
+        message = board.move(player, move[i-1], move[i]) 
+        if message[0]:
+            board = message[1]
+        else:
+            print(message[1])
+            break
+    
+    return board
+
 def is_coord(coord):
     """Is this string a valid coordinate?"""
     return coord[0] in 'ABCDEFGH' and coord[1] in '01234567'
@@ -326,7 +342,13 @@ if __name__ == '__main__':
         players = input('Invalid number of players. Try again: ')
 
     if players == '1':
-        print('AI not implemented yet. So... I\'ll just... do nothing')
+        board = Board()
+        while True:
+            print(board.render(Checker.PLAYER_ONE))
+            board = input_and_move(Checker.PLAYER_ONE, board)
+            print(board.render(Checker.PLAYER_TWO))
+            move = get_best_move(board)
+            board = comp_move(board, Checker.PLAYER_TWO, move[len(move)-1])
     else:
         board = Board()
         while True:
