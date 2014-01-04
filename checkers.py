@@ -64,7 +64,7 @@ class Board:
                 s += '  +-+-+-+-+-+-+-+-+\n'
                 s += ('\n|%s| %i' % ('|'.join([Checker.character(p) for p in row]), len(self.data)-n-1))[::-1]
         s += '  +-+-+-+-+-+-+-+-+'
-        s += '\nBest move result: ' + str(get_best_move(self)) # temporary
+        #s += '\nBest move result: ' + str(get_best_move(self)) # temporary
         return s
 
     def number_of_pieces(self, player):
@@ -347,9 +347,13 @@ if __name__ == '__main__':
         while True:
             print(board.render(Checker.PLAYER_ONE))
             move = get_o_best_move(board)
+            print(str(move))
+            print(eval_game_state(board))
             board = comp_move(board, Checker.PLAYER_ONE, move[len(move)-1])
             print(board.render(Checker.PLAYER_ONE))  #disabled board rotation
             move = get_best_move(board)
+            print(str(move))
+            print(eval_game_state(board))
             board = comp_move(board, Checker.PLAYER_TWO, move[len(move)-1])
     if players == '1':
         board = Board()
@@ -358,6 +362,8 @@ if __name__ == '__main__':
             board = input_and_move(Checker.PLAYER_ONE, board)
             print(board.render(Checker.PLAYER_TWO))
             move = get_best_move(board)
+            print(str(move))
+            print(eval_game_state(board))
             board = comp_move(board, Checker.PLAYER_TWO, move[len(move)-1])
     else:
         board = Board()
