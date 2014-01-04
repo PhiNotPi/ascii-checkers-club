@@ -348,7 +348,7 @@ if __name__ == '__main__':
             print(board.render(Checker.PLAYER_ONE))
             move = get_o_best_move(board)
             board = comp_move(board, Checker.PLAYER_ONE, move[len(move)-1])
-            print(board.render(Checker.PLAYER_TWO))
+            print(board.render(Checker.PLAYER_ONE))  #disabled board rotation
             move = get_best_move(board)
             board = comp_move(board, Checker.PLAYER_TWO, move[len(move)-1])
     if players == '1':
